@@ -264,9 +264,9 @@ def main():
         for i in range(8):
             for j in range(8):
                 fig, axarr = plt.subplots(8, 8)
-                conv1_filter_result = sess.run(conv1_filter, feed_dict={x: [horse_image]})
                 for i in range(8):
                     for j in range(8):
+                        conv1_filter_result = sess.run(conv1_filter, feed_dict={x: [horse_image]})
                         horse_conv1 = conv1_filter_result[0, :, :, i * 8 + j]
                         axarr[i, j].imshow(horse_conv1, cmap='gray')
                         axarr[i, j].xaxis.set_visible(False)
