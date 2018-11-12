@@ -232,7 +232,9 @@ def main():
             # Loop over all batches
             n_batches = 5
             for batch_i in range(1, n_batches + 1):
-                batch_features[:5000], batch_labels[:5000] = pickle.load(open('preprocess_batch_' + str(batch_i) + '.p', mode='rb'))
+                batch_features, batch_labels = pickle.load(open('preprocess_batch_' + str(batch_i) + '.p', mode='rb'))
+                batch_features = batch_features[:5000]
+                batch_labels = batch_labels[:5000]
 
                 print("Batch features: ", batch_features)
 
