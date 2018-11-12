@@ -233,8 +233,8 @@ def main():
             n_batches = 5
             for batch_i in range(1, n_batches + 1):
                 batch_features, batch_labels = pickle.load(open('preprocess_batch_' + str(batch_i) + '.p', mode='rb'))
-                batch_features = batch_features[:5000]
-                batch_labels = batch_labels[:5000]
+                batch_features = batch_features[:1000]
+                batch_labels = batch_labels[:1000]
 
                 print("Batch features: ", batch_features)
 
@@ -251,7 +251,7 @@ def main():
         save_path = saver.save(sess, save_model_path)
 
 
-        print(sess.run(conv1_filter))
+        # print(sess.run(conv1_filter))
 
         horse_image = None
         for valid_feature, valid_result in zip(valid_features, valid_results):
