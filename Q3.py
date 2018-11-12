@@ -264,7 +264,7 @@ def main():
         for i in range(8):
             for j in range(8):
                 fig, axarr = plt.subplots(8, 8)
-                conv1_filter_result = session.run(conv1_filter, feed_dict={x: [horse_image]})
+                conv1_filter_result = sess.run(conv1_filter, feed_dict={x: [horse_image]})
                 for i in range(8):
                     for j in range(8):
                         horse_conv1 = conv1_filter_result[0, :, :, i * 8 + j]
@@ -274,7 +274,7 @@ def main():
                 fig.savefig('first_layer_outputs')
                 plt.close(fig)
         #
-        horse_conv2 = session.run(conv2_filter, feed_dict={x: [horse_image]})[0, :, :, 0]
+        horse_conv2 = sess.run(conv2_filter, feed_dict={x: [horse_image]})[0, :, :, 0]
         plt.imsave('second_layer_output', make_0_to_1(horse_conv2), cmap='gray')
         #
         print('Horse images generation finished.')
