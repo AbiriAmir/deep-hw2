@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 
 cifar10_dataset_folder_path = 'cifar-10-batches-py'
 
+# (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
+# y_train = one_hot_encode(y_train, OUTPUT_LAYER_SIZE)
+# y_test = one_hot_encode(y_test, OUTPUT_LAYER_SIZE)
+
 
 def load_label_names():
     return ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
@@ -230,6 +234,8 @@ def main():
             for batch_i in range(1, n_batches + 1):
                 batch_features, batch_labels = pickle.load(open('preprocess_batch_' + str(batch_i) + '.p', mode='rb'))
 
+                print("Batch features: ", batch_features)
+
                 train_neural_network(x, y, keep_prob, sess, optimizer, keep_probability, batch_features, batch_labels)
 
                 print('Epoch {:>2}, CIFAR-10 Batch {}:  '.format(epoch + 1, batch_i), end='')
@@ -244,6 +250,33 @@ def main():
 
 
         print(sess.run(conv1_filter))
+
+        horse_image = None
+        for valid_feature, valid_result in zip(valid_features, valid_results):
+            if valid_result[load_label_names().index('horse')] == 1:
+                horse_image = valid_feature
+                break
+
+        plt.imsave('horse_orig', horse_image)
+        #
+        for i in range(8):
+        	for j in range(8):
+        		fig, axarr = plt.subplots(8, 8)
+                conv1_filter_result = session.run(conv1_filter, feed_dict={x: [horse_image]})
+        		for i in range(8):
+        			for j in range(8):
+        				horse_conv1 = conv1_filter_result[0, :, :, i * 8 + j]
+        				axarr[i, j].imshow(horse_conv1, cmap='gray')
+        				axarr[i, j].xaxis.set_visible(False)
+        				axarr[i, j].yaxis.set_visible(False)
+        		fig.savefig('first_layer_outputs')
+        		plt.close(fig)
+        #
+        horse_conv2 = session.run(conv2, feed_dict={x: [horse_image]})[0, :, :, 0]
+        plt.imsave('second_layer_output', make_0_to_1(horse_conv2), cmap='gray')
+        #
+        print('Horse images generation finished.')
+
 
     plt.plot(accuracies)
     plt.ylabel('Training Accuracy')
