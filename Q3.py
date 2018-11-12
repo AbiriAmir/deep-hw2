@@ -148,7 +148,7 @@ def conv_net(x, keep_prob):
     # 10
     full1 = tf.contrib.layers.fully_connected(inputs=flat, num_outputs=512, activation_fn=tf.nn.relu)
     full1 = tf.nn.dropout(full1, keep_prob)
-    full1 = tf.layers.batch_normalization(full1)
+    # full1 = tf.layers.batch_normalization(full1)
 
     # 14
     out = tf.contrib.layers.fully_connected(inputs=full1, num_outputs=10, activation_fn=None)
@@ -232,7 +232,7 @@ def main():
             # Loop over all batches
             n_batches = 5
             for batch_i in range(1, n_batches + 1):
-                batch_features, batch_labels = pickle.load(open('preprocess_batch_' + str(batch_i) + '.p', mode='rb'))
+                batch_features[:5000], batch_labels[:5000] = pickle.load(open('preprocess_batch_' + str(batch_i) + '.p', mode='rb'))
 
                 print("Batch features: ", batch_features)
 
