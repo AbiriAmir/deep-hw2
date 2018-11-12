@@ -152,7 +152,7 @@ def conv_net(x, keep_prob):
 
     # 14
     out = tf.contrib.layers.fully_connected(inputs=full1, num_outputs=10, activation_fn=None)
-    return out, conv1_filter, conv2_filter
+    return out, conv1, conv2
 
 def train_neural_network(x, y, keep_prob, session, optimizer, keep_probability, feature_batch, label_batch):
     session.run(optimizer,
