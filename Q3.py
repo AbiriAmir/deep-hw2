@@ -152,7 +152,7 @@ def conv_net(x, keep_prob):
 
     # 14
     out = tf.contrib.layers.fully_connected(inputs=full1, num_outputs=10, activation_fn=None)
-    return out, conv1_filter
+    return out, conv1_filter, conv2_filter
 
 def train_neural_network(x, y, keep_prob, session, optimizer, keep_probability, feature_batch, label_batch):
     session.run(optimizer,
@@ -206,7 +206,7 @@ def main():
     keep_prob = tf.placeholder(tf.float32, name='keep_prob')
 
     # Build model
-    logits, conv1_filter = conv_net(x, keep_prob)
+    logits, conv1_filter, conv2_filter = conv_net(x, keep_prob)
     model = tf.identity(logits, name='logits') # Name logits Tensor, so that can be loaded from disk after training
 
     # Loss and Optimizer
@@ -260,19 +260,19 @@ def main():
         plt.imsave('horse_orig', horse_image)
         #
         for i in range(8):
-        	for j in range(8):
-        		fig, axarr = plt.subplots(8, 8)
+            for j in range(8):
+                fig, axarr = plt.subplots(8, 8)
                 conv1_filter_result = session.run(conv1_filter, feed_dict={x: [horse_image]})
-        		for i in range(8):
-        			for j in range(8):
-        				horse_conv1 = conv1_filter_result[0, :, :, i * 8 + j]
-        				axarr[i, j].imshow(horse_conv1, cmap='gray')
-        				axarr[i, j].xaxis.set_visible(False)
-        				axarr[i, j].yaxis.set_visible(False)
-        		fig.savefig('first_layer_outputs')
-        		plt.close(fig)
+                for i in range(8):
+                    for j in range(8):
+                        horse_conv1 = conv1_filter_result[0, :, :, i * 8 + j]
+                        axarr[i, j].imshow(horse_conv1, cmap='gray')
+                        axarr[i, j].xaxis.set_visible(False)
+                        axarr[i, j].yaxis.set_visible(False)
+                fig.savefig('first_layer_outputs')
+                plt.close(fig)
         #
-        horse_conv2 = session.run(conv2, feed_dict={x: [horse_image]})[0, :, :, 0]
+        horse_conv2 = session.run(conv2_filter, feed_dict={x: [horse_image]})[0, :, :, 0]
         plt.imsave('second_layer_output', make_0_to_1(horse_conv2), cmap='gray')
         #
         print('Horse images generation finished.')
