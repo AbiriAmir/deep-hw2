@@ -271,11 +271,11 @@ def main():
                         axarr[i, j].imshow(horse_conv1, cmap='gray')
                         axarr[i, j].xaxis.set_visible(False)
                         axarr[i, j].yaxis.set_visible(False)
-                fig.savefig('first_layer_outputs')
+                fig.savefig('first_layer_images')
                 plt.close(fig)
         #
         horse_conv2 = sess.run(conv2_filter, feed_dict={x: [horse_image]})[0, :, :, 0]
-        plt.imsave('second_layer_output', make_0_to_1(horse_conv2), cmap='gray')
+        plt.imsave('second_layer_image', horse_conv2, cmap='gray')
         #
         print('Horse images generation finished.')
 
