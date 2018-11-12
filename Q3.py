@@ -254,7 +254,7 @@ def main():
         # print(sess.run(conv1_filter))
 
         horse_image = None
-        for valid_feature, valid_result in zip(valid_features, valid_labels:
+        for valid_feature, valid_result in zip(valid_features, valid_labels):
             if valid_result[load_label_names().index('horse')] == 1:
                 horse_image = valid_feature
                 break
