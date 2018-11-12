@@ -236,7 +236,7 @@ def main():
                 batch_features = batch_features[:1000]
                 batch_labels = batch_labels[:1000]
 
-                print("Batch features: ", batch_features)
+                # print("Batch features: ", batch_features)
 
                 train_neural_network(x, y, keep_prob, sess, optimizer, keep_probability, batch_features, batch_labels)
 
@@ -254,7 +254,7 @@ def main():
         # print(sess.run(conv1_filter))
 
         horse_image = None
-        for valid_feature, valid_result in zip(valid_features, valid_results):
+        for valid_feature, valid_result in zip(valid_features, valid_labels:
             if valid_result[load_label_names().index('horse')] == 1:
                 horse_image = valid_feature
                 break
